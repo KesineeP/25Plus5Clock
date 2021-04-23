@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    justify-content: center;
+    color: white;
+    background-color: rgb(245, 140, 99);
+
+}
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px;
+}
+.setting {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin: 30px;
+}
+.break-session {
+    margin : 30px;
+}
+.setting-button {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+#timer-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 10px;
+    text-align: center;
+
+}
