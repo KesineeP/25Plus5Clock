@@ -8,7 +8,7 @@ const App = () => {
     <div className="main">
       <div className="header">
         <h2>Pomodoro Clock</h2>
-        <h4>Be productive</h4>
+        <p>Be productive</p>
       </div>
       <Setting />
       <Clock />
