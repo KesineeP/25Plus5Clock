@@ -14,6 +14,12 @@ const App = () => {
   const onDecreaseBreakLength = () => {
     setBreakLength(breakLength - 1);
   }
+  const onIncreaseSessionLength = () => {
+    setSessionLength(sessionLength + 1);
+  };
+  const onDecreaseSessionLength = () => {
+    setSessionLength(sessionLength - 1);
+  }
 
   return (
     <div className="main">
@@ -25,7 +31,9 @@ const App = () => {
         breakInterval={breakLength}
         sessionLength={sessionLength}
         onIncreaseBreakLength={onIncreaseBreakLength}
-        onDecreaseBreakLength={onDecreaseBreakLength} />
+        onDecreaseBreakLength={onDecreaseBreakLength}
+        onIncreaseSessionLength={onIncreaseSessionLength}
+        onDecreaseSessionLength={onDecreaseSessionLength} />
       <Timer
         timerMinute={timerMinute}
 
