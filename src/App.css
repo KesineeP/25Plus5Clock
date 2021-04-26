@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     color: white;
-    background-color: rgb(245, 140, 99);
+    background-color: rgb(38, 37, 53);
 
 }
 .header {
@@ -22,19 +22,41 @@ body {
     margin: 30px;
 }
 .break-session {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin : 30px;
 }
 .setting-button {
-    display: flex;
+    display: block;
     justify-content: space-between;
+    align-items: center;
     margin-top: 10px;
+    padding: 5px;
 }
-
+.setting-button > button {
+    width: 20px;
+}
+.setting-button > span {
+    padding: 0 20px;
+}
 #timer-container {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-gap: 10px;
     text-align: center;
+    
+}
+.timer {
+    margin: 0 40px;
+    padding: 20px;
+    border: #fff 2px solid;
+    border-radius: 20px;
 
+}
+.button-action > button {
+    margin: 10px 30px;
+    padding: 5px 15px;
 }
