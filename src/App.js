@@ -9,18 +9,36 @@ const App = () => {
   const [timerMinute, setTimerMinute] = useState(25);
 
   const onIncreaseBreakLength = () => {
-    setBreakLength(breakLength + 1);
+    setBreakLength((prev) => prev + 1);
+
   };
   const onDecreaseBreakLength = () => {
-    setBreakLength(breakLength - 1);
+    setBreakLength((prev) => prev - 1);
   }
   const onIncreaseSessionLength = () => {
-    setSessionLength(sessionLength + 1);
+    setSessionLength((prev) => prev + 1);
+    setTimerMinute(sessionLength + 1);
   };
   const onDecreaseSessionLength = () => {
-    setSessionLength(sessionLength - 1);
+    setSessionLength((prev) => prev - 1);
+    setTimerMinute((prev) => prev - 1);
   }
 
+
+  const onDecreaseTimerMinute = () => {
+    setTimerMinute((prev) => prev - 1);
+  }
+
+  const onToggleInterval = (isSession) => {
+    if (isSession) {
+      setTimerMinute(sessionLength);
+    } else {
+      setTimerMinute(breakLength);
+    }
+  }
+  const onResetTimer = () => {
+    setTimerMinute(sessionLength)
+  }
   return (
     <div className="main">
       <div className="header">
@@ -36,7 +54,10 @@ const App = () => {
         onDecreaseSessionLength={onDecreaseSessionLength} />
       <Timer
         timerMinute={timerMinute}
-
+        breakLength={breakLength}
+        decreaseTimerMinute={onDecreaseTimerMinute}
+        toggleInterval={onToggleInterval}
+        onResetTimer={onResetTimer}
       />
     </div>
   );

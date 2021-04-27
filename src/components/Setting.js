@@ -25,7 +25,7 @@ const Setting = ({ breakInterval, sessionLength, onIncreaseBreakLength, onDecrea
                 <div className="setting-button">
                     <button id="break-decrement" onClick={decreaseBreak}>-</button>
                     <span id="break-length">{breakInterval}</span>
-                    <button id="break-increament" onClick={increaseBreak}>+</button>
+                    <button id="break-increment" onClick={increaseBreak}>+</button>
                 </div>
             </div>
             <div className="break-session">
