@@ -6,8 +6,8 @@ import Setting from './components/Setting.js';
 const App = () => {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timerMinute, setTimerMinute] = useState(25);
-
+  const [timerMinute, setTimerMinute] = useState(sessionLength);
+  const [isTimerOn, setIsTimerOn] = useState(false)
   const onIncreaseBreakLength = () => {
     setBreakLength((prev) => prev + 1);
 
@@ -39,6 +39,9 @@ const App = () => {
   const onResetTimer = () => {
     setTimerMinute(sessionLength)
   }
+  const onStartStopTimer = (isTimerOn) => {
+    setIsTimerOn(isTimerOn)
+  }
   return (
     <div className="main">
       <div className="header">
@@ -51,13 +54,17 @@ const App = () => {
         onIncreaseBreakLength={onIncreaseBreakLength}
         onDecreaseBreakLength={onDecreaseBreakLength}
         onIncreaseSessionLength={onIncreaseSessionLength}
-        onDecreaseSessionLength={onDecreaseSessionLength} />
+        onDecreaseSessionLength={onDecreaseSessionLength}
+        isTimerOn={isTimerOn} />
       <Timer
         timerMinute={timerMinute}
         breakLength={breakLength}
         decreaseTimerMinute={onDecreaseTimerMinute}
         toggleInterval={onToggleInterval}
         onResetTimer={onResetTimer}
+        startStopTimer={onStartStopTimer}
+        isTimerOn={isTimerOn}
+        setIsTimerOn={setIsTimerOn}
       />
     </div>
   );
