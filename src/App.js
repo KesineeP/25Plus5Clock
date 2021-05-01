@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Timer from './components/Timer.js'
 import Setting from './components/Setting.js';
@@ -6,8 +6,10 @@ import Setting from './components/Setting.js';
 const App = () => {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timerMinute, setTimerMinute] = useState(sessionLength);
+  const [timer, setTimer] = useState({ minute: sessionLength, second: 0 })
   const [isTimerOn, setIsTimerOn] = useState(false)
+  const [isSession, setIsSession] = useState(true)
+
   const onIncreaseBreakLength = () => {
     setBreakLength((prev) => prev + 1);
 
@@ -17,31 +19,65 @@ const App = () => {
   }
   const onIncreaseSessionLength = () => {
     setSessionLength((prev) => prev + 1);
-    setTimerMinute(sessionLength + 1);
+    setTimer({ ...timer, minute: sessionLength + 1 })
   };
   const onDecreaseSessionLength = () => {
-    setSessionLength((prev) => prev - 1);
-    setTimerMinute((prev) => prev - 1);
+    setSessionLength((prev) => {
+      return prev - 1
+    });
+    setTimer((prev) => {
+      return { ...timer, minute: prev.minute + 1 }
+    })
   }
 
-
-  const onDecreaseTimerMinute = () => {
-    setTimerMinute((prev) => prev - 1);
+  const onDecreaseTimer = (timerMinute, timerSecond) => {
+    // console.log('second before switch', timerSecond)
+    // console.log('minute before switch', timerMinute)
+    switch (timerSecond) {
+      case 0:
+        if (timerMinute === 0) {
+          if (isSession) {
+            setIsSession(false)
+            onToggleInterval(isSession)
+          } else {
+            setIsSession(true)
+            onToggleInterval(isSession)
+          }
+        } else {
+          setTimer((prev) => {
+            console.log('prev', prev)
+            return { minute: prev.minute - 1, second: 59 }
+          })
+        }
+        break;
+      default:
+        setTimer((prev) => {
+          console.log('Default prev', prev)
+          return { ...timer, second: prev.second - 1 }
+        })
+        break;
+    }
   }
+
 
   const onToggleInterval = (isSession) => {
     if (isSession) {
-      setTimerMinute(sessionLength);
+      setTimer({ ...timer, minute: sessionLength })
     } else {
-      setTimerMinute(breakLength);
+      setTimer({ ...timer, minute: breakLength })
+
     }
   }
   const onResetTimer = () => {
-    setTimerMinute(sessionLength)
+    setTimer({ minute: sessionLength, second: 0 })
+    setIsSession(true)
   }
   const onStartStopTimer = (isTimerOn) => {
     setIsTimerOn(isTimerOn)
   }
+  console.log(timer.minute)
+  console.log(timer.second)
+
   return (
     <div className="main">
       <div className="header">
@@ -57,14 +93,16 @@ const App = () => {
         onDecreaseSessionLength={onDecreaseSessionLength}
         isTimerOn={isTimerOn} />
       <Timer
-        timerMinute={timerMinute}
+        timerMinute={timer.minute}
+        timerSecond={timer.second}
         breakLength={breakLength}
-        decreaseTimerMinute={onDecreaseTimerMinute}
+        decreaseTimer={onDecreaseTimer}
         toggleInterval={onToggleInterval}
         onResetTimer={onResetTimer}
         startStopTimer={onStartStopTimer}
         isTimerOn={isTimerOn}
         setIsTimerOn={setIsTimerOn}
+        isSession={isSession}
       />
     </div>
   );

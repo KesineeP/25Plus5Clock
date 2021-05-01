@@ -1,84 +1,27 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
-const Timer = ({ timerMinute, decreaseTimerMinute, toggleInterval, onResetTimer }) => {
-    const [isSession, setIsSession] = useState(true)
-    const [timerSecond, setTimerSecond] = useState(0)
-    // const [intervalId, setIntervalId] = useState(0)
-    const [isTimerOn, setIsTimerOn] = useState(false)
-    const isFirstRun = useRef(true);
-    let intervalRef = useRef(null);
+const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSession, setIsTimerOn, isTimerOn }) => {
 
     useEffect(() => {
-        if (isFirstRun.current) {
-            isFirstRun.current = false;
-            return;
+        if (isTimerOn) {
+            const interval = setInterval(() => decreaseTimer(timerMinute, timerSecond), 1000);
+            return () => clearInterval(interval);
         }
-    }, [isSession])
 
+    }, [isTimerOn, timerMinute, timerSecond]);
     const startTimer = () => {
-        if (intervalRef.current) {
-            stopTimer();
-            return;
-        }
-        setIsTimerOn(!isTimerOn);
-        intervalRef.current = setInterval(() => {
-            setTimerSecond((seconds) => {
-                if (seconds === 0) {
-                    if (timerMinute === 0) {
-                        if (isSession) {
-                            setIsSession(false)
-                            toggleInterval(isSession)
-                        } else {
-                            setIsSession(true)
-                            toggleInterval(isSession)
-                        }
-                    }
-                    decreaseTimerMinute();
-                    setTimerSecond(59);
-                }
-                return seconds - 1
-
-            })
-        }, 1000)
+        setIsTimerOn(true);
     }
 
-    // const decreaseTimer = () => {
-    //     switch (timerSecond) {
-    //         case 0:
-    //             if (timerMinute === 0) {
-    //                 if (isSession) {
-    //                     setIsSession(false)
-    //                     toggleInterval(isSession)
-    //                 } else {
-    //                     setIsSession(true)
-    //                     toggleInterval(isSession)
-    //                 }
-    //             } else {
-    //                 decreaseTimerMinute();
-    //                 setTimerSecond(59);
-    //             }
-    //             break;
-    //         default:
-    //             setTimerSecond((prev) => prev - 1)
-    //             console.log(timerSecond)
-    //             break;
-    //     }
-
-    // }
-
-
     const stopTimer = () => {
-        if (intervalRef.current === null) return;
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
         setIsTimerOn(false);
     }
     const resetTimer = () => {
         stopTimer();
         onResetTimer();
-        setIsSession(true)
-        setTimerSecond(0);
     }
+    console.log(timerMinute)
+    console.log(timerSecond)
     return (
         <div id="timer-container">
             <div className="timer">
