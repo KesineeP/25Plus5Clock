@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import Timer from './components/Timer.js'
 import Setting from './components/Setting.js';
@@ -52,7 +52,7 @@ const App = () => {
         break;
       default:
         setTimer((prev) => {
-          console.log('Default prev', prev)
+          // console.log('Default prev', prev)
           return { ...timer, second: prev.second - 1 }
         })
         break;
@@ -62,9 +62,9 @@ const App = () => {
 
   const onToggleInterval = (isSession) => {
     if (isSession) {
-      setTimer({ ...timer, minute: sessionLength })
-    } else {
       setTimer({ ...timer, minute: breakLength })
+    } else {
+      setTimer({ ...timer, minute: sessionLength })
 
     }
   }
@@ -77,9 +77,10 @@ const App = () => {
   const onStartStopTimer = (isTimerOn) => {
     setIsTimerOn(isTimerOn)
   }
-  console.log(timer.minute)
-  console.log(timer.second)
-
+  // console.log(timer.minute)
+  // console.log(timer.second)
+  console.log('session', sessionLength)
+  console.log('break', breakLength)
   return (
     <div className="main">
       <div className="header">

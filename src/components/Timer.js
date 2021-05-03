@@ -1,14 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSession, setIsTimerOn, isTimerOn }) => {
 
     useEffect(() => {
         if (isTimerOn) {
-            const interval = setInterval(() => decreaseTimer(timerMinute, timerSecond), 1000);
+            const interval = setInterval(() => decreaseTimer(timerMinute, timerSecond), 10);
             return () => clearInterval(interval);
         }
 
     }, [isTimerOn, timerMinute, timerSecond]);
+
     const startTimer = () => {
         setIsTimerOn(true);
     }
@@ -20,8 +21,10 @@ const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSessio
         stopTimer();
         onResetTimer();
     }
-    console.log(timerMinute)
-    console.log(timerSecond)
+    // console.log(timerMinute)
+    // console.log(timerSecond)
+
+
     return (
         <div id="timer-container">
             <div className="timer">
