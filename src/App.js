@@ -26,7 +26,7 @@ const App = () => {
       return prev - 1
     });
     setTimer((prev) => {
-      return { ...timer, minute: prev.minute + 1 }
+      return { ...timer, minute: prev.minute - 1 }
     })
   }
 
@@ -69,7 +69,9 @@ const App = () => {
     }
   }
   const onResetTimer = () => {
-    setTimer({ minute: sessionLength, second: 0 })
+    setTimer({ minute: 25, second: 0 })
+    setSessionLength(25)
+    setBreakLength(5)
     setIsSession(true)
   }
   const onStartStopTimer = (isTimerOn) => {
