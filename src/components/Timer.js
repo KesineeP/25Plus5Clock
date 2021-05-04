@@ -4,11 +4,11 @@ const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSessio
 
     useEffect(() => {
         if (isTimerOn) {
-            const interval = setInterval(() => decreaseTimer(timerMinute, timerSecond), 10);
+            const interval = setInterval(() => decreaseTimer(timerMinute, timerSecond), 1000);
             return () => clearInterval(interval);
         }
 
-    }, [isTimerOn, timerMinute, timerSecond]);
+    }, [isTimerOn, timerMinute, timerSecond, decreaseTimer]);
 
     const startTimer = () => {
         setIsTimerOn(true);
@@ -31,16 +31,7 @@ const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSessio
                 <div id="timer-label">
                     <h2>{isSession ? "Session" : "Break"}</h2>
                 </div>
-                <div id="time-left">
-                    <span>{timerMinute}</span>
-                    <span> : </span>
-                    <span>
-                        {timerSecond === 0 ?
-                            "00"
-                            : timerSecond < 10 ?
-                                "0" + timerSecond
-                                : timerSecond}
-                    </span>
+                <div id="time-left">{timerMinute}:{timerSecond === 0 ? "00" : timerSecond < 10 ? "0" + timerSecond : timerSecond}
                 </div>
             </div>
             <section className="button-action">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './App.css';
 import Timer from './components/Timer.js'
 import Setting from './components/Setting.js';
@@ -6,9 +6,10 @@ import Setting from './components/Setting.js';
 const App = () => {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timer, setTimer] = useState({ minute: sessionLength, second: 0 })
-  const [isTimerOn, setIsTimerOn] = useState(false)
-  const [isSession, setIsSession] = useState(true)
+  const [timer, setTimer] = useState({ minute: sessionLength, second: 0 });
+  const [isTimerOn, setIsTimerOn] = useState(false);
+  const [isSession, setIsSession] = useState(true);
+  const audioRef = useRef(null);
 
   const onIncreaseBreakLength = () => {
     setBreakLength((prev) => prev + 1);
@@ -36,13 +37,15 @@ const App = () => {
     switch (timerSecond) {
       case 0:
         if (timerMinute === 0) {
+
           if (isSession) {
-            setIsSession(false)
-            onToggleInterval(isSession)
+            setIsSession(false);
+            onToggleInterval(isSession);
           } else {
-            setIsSession(true)
-            onToggleInterval(isSession)
+            setIsSession(true);
+            onToggleInterval(isSession);
           }
+
         } else {
           setTimer((prev) => {
             console.log('prev', prev)
@@ -65,13 +68,14 @@ const App = () => {
       setTimer({ ...timer, minute: breakLength })
     } else {
       setTimer({ ...timer, minute: sessionLength })
-
     }
+    audioRef.current.play()
   }
   const onResetTimer = () => {
-    setTimer({ minute: 25, second: 0 })
+    audioRef.current.load()
     setSessionLength(25)
     setBreakLength(5)
+    setTimer({ minute: sessionLength, second: 0 })
     setIsSession(true)
   }
   const onStartStopTimer = (isTimerOn) => {
@@ -107,6 +111,9 @@ const App = () => {
         setIsTimerOn={setIsTimerOn}
         isSession={isSession}
       />
+      <audio id="beep" ref={audioRef}>
+        <source sarc="https://onlineclock.net/audio/options/default.mp3" type="audio/mpeg" />
+      </audio>
     </div>
   );
 
