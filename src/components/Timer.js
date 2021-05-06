@@ -1,14 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSession, setIsTimerOn, isTimerOn }) => {
 
-    useEffect(() => {
-        if (isTimerOn) {
-            const interval = setInterval(() => decreaseTimer(timerMinute, timerSecond), 1000);
-            return () => clearInterval(interval);
-        }
-
-    }, [isTimerOn, timerMinute, timerSecond, decreaseTimer]);
 
     const startTimer = () => {
         setIsTimerOn(true);

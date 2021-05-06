@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './App.css';
 import Timer from './components/Timer.js'
 import Setting from './components/Setting.js';
@@ -10,6 +10,15 @@ const App = () => {
   const [isTimerOn, setIsTimerOn] = useState(false);
   const [isSession, setIsSession] = useState(true);
   const audioRef = useRef(null);
+
+
+  useEffect(() => {
+    if (isTimerOn) {
+      const interval = setInterval(() => onDecreaseTimer(timer.minute, timer.second), 100);
+      return () => clearInterval(interval);
+    }
+
+  }, [isTimerOn, timer.minute, timer.second]);
 
   const onIncreaseBreakLength = () => {
     setBreakLength((prev) => prev + 1);
@@ -31,13 +40,13 @@ const App = () => {
     })
   }
 
-  const onDecreaseTimer = (timerMinute, timerSecond) => {
+  const onDecreaseTimer = () => {
     // console.log('second before switch', timerSecond)
     // console.log('minute before switch', timerMinute)
-    switch (timerSecond) {
+    switch (timer.second) {
       case 0:
-        if (timerMinute === 0) {
-
+        if (timer.minute === 0) {
+          audioRef.current.play()
           if (isSession) {
             setIsSession(false);
             onToggleInterval(isSession);
@@ -69,13 +78,12 @@ const App = () => {
     } else {
       setTimer({ ...timer, minute: sessionLength })
     }
-    audioRef.current.play()
   }
   const onResetTimer = () => {
-    audioRef.current.load()
+    // audioRef.current.load()
     setSessionLength(25)
     setBreakLength(5)
-    setTimer({ minute: sessionLength, second: 0 })
+    setTimer({ minute: 25, second: 0 })
     setIsSession(true)
   }
   const onStartStopTimer = (isTimerOn) => {
