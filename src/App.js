@@ -69,7 +69,7 @@ const App = () => {
         })
         break;
     }
-  }
+  };
 
 
   const onToggleInterval = (isSession) => {
@@ -80,7 +80,7 @@ const App = () => {
     }
   }
   const onResetTimer = () => {
-    // audioRef.current.load()
+    audioRef.current.load()
     setSessionLength(25)
     setBreakLength(5)
     setTimer({ minute: 25, second: 0 })
@@ -110,9 +110,6 @@ const App = () => {
       <Timer
         timerMinute={timer.minute}
         timerSecond={timer.second}
-        breakLength={breakLength}
-        decreaseTimer={onDecreaseTimer}
-        toggleInterval={onToggleInterval}
         onResetTimer={onResetTimer}
         startStopTimer={onStartStopTimer}
         isTimerOn={isTimerOn}
