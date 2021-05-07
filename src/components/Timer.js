@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSession, setIsTimerOn, isTimerOn }) => {
+const Timer = ({ timerSecond, timerMinute, onResetTimer, isSession, setIsTimerOn, isTimerOn }) => {
 
 
     const startTimer = () => {
@@ -30,7 +30,7 @@ const Timer = ({ timerSecond, timerMinute, decreaseTimer, onResetTimer, isSessio
             <section className="button-action">
                 {!isTimerOn ?
                     <button id="start_stop" onClick={startTimer}>Start</button> :
-                    <button id="stop_Start" onClick={stopTimer}>Stop</button>}
+                    <button id="start_stop" onClick={stopTimer}>Stop</button>}
                 <button id="reset" onClick={resetTimer}>Reset</button>
             </section>
 
