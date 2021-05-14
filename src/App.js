@@ -14,11 +14,15 @@ const App = () => {
 
   useEffect(() => {
     if (isTimerOn) {
-      const interval = setInterval(() => onDecreaseTimer(timer.minute, timer.second), 100);
+      const interval = setInterval(() => onDecreaseTimer(timer.minute, timer.second), 1000);
       return () => clearInterval(interval);
     }
 
   }, [isTimerOn, timer.minute, timer.second]);
+
+  useEffect(() => {
+    if (timer.minute === 0 && timer.second === 0) audioRef.current.play()
+  }, [timer.second, timer.minute])
 
   const onIncreaseBreakLength = () => {
     setBreakLength((prev) => prev + 1);
@@ -41,12 +45,9 @@ const App = () => {
   }
 
   const onDecreaseTimer = () => {
-    // console.log('second before switch', timerSecond)
-    // console.log('minute before switch', timerMinute)
     switch (timer.second) {
       case 0:
         if (timer.minute === 0) {
-          audioRef.current.play()
           if (isSession) {
             setIsSession(false);
             onToggleInterval(isSession);
@@ -64,7 +65,6 @@ const App = () => {
         break;
       default:
         setTimer((prev) => {
-          // console.log('Default prev', prev)
           return { ...timer, second: prev.second - 1 }
         })
         break;
@@ -80,19 +80,17 @@ const App = () => {
     }
   }
   const onResetTimer = () => {
-    audioRef.current.load()
+    console.log('Reset btn clicked')
     setSessionLength(25)
     setBreakLength(5)
     setTimer({ minute: 25, second: 0 })
     setIsSession(true)
+    audioRef.current.load()
   }
   const onStartStopTimer = (isTimerOn) => {
     setIsTimerOn(isTimerOn)
   }
-  // console.log(timer.minute)
-  // console.log(timer.second)
-  console.log('session', sessionLength)
-  console.log('break', breakLength)
+
   return (
     <div className="main">
       <div className="header">
@@ -116,8 +114,7 @@ const App = () => {
         setIsTimerOn={setIsTimerOn}
         isSession={isSession}
       />
-      <audio id="beep" ref={audioRef}>
-        <source sarc="https://onlineclock.net/audio/options/default.mp3" type="audio/mpeg" />
+      <audio id="beep" ref={audioRef} src="https://onlineclock.net/audio/options/default.mp3" type="audio/mpeg">
       </audio>
     </div>
   );

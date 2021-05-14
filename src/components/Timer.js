@@ -21,10 +21,13 @@ const Timer = ({ timerSecond, timerMinute, onResetTimer, isSession, setIsTimerOn
     return (
         <div id="timer-container">
             <div className="timer">
-                <div id="timer-label">
-                    <h2>{isSession ? "Session" : "Break"}</h2>
+                <div>
+                    <h2 id="timer-label">{isSession ? "Session" : "Break"}</h2>
                 </div>
-                <div id="time-left">{timerMinute}:{timerSecond === 0 ? "00" : timerSecond < 10 ? "0" + timerSecond : timerSecond}
+                <div id="time-left">
+                    {timerMinute === 0 ? "00" : timerMinute < 10 ? "0" + timerMinute : timerMinute}
+                    :
+                    {timerSecond === 0 ? "00" : timerSecond < 10 ? "0" + timerSecond : timerSecond}
                 </div>
             </div>
             <section className="button-action">
