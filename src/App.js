@@ -13,6 +13,7 @@ const App = () => {
 
 
   useEffect(() => {
+    if (timer.minute === 0 && timer.second === 0) audioRef.current.play()
     if (isTimerOn) {
       const interval = setInterval(() => onDecreaseTimer(timer.minute, timer.second), 1000);
       return () => clearInterval(interval);
@@ -20,9 +21,9 @@ const App = () => {
 
   }, [isTimerOn, timer.minute, timer.second]);
 
-  useEffect(() => {
-    if (timer.minute === 0 && timer.second === 0) audioRef.current.play()
-  }, [timer.second, timer.minute])
+  // useEffect(() => {
+  //   if (timer.minute === 0 && timer.second === 0) audioRef.current.play()
+  // }, [timer.second, timer.minute])
 
   const onIncreaseBreakLength = () => {
     setBreakLength((prev) => prev + 1);
